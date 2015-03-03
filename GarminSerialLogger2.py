@@ -29,7 +29,12 @@ def init_serial():
         ser = serial.Serial("/dev/ttyUSB0", 115200, timeout=1.0, rtscts=0)
     if ser.isOpen():
         print 'Open: ' + ser.portstr
-
+        
+def exitnow(name):
+    print name, " exiting."
+    os.system('shutdown -h now')
+    return
+    
 def runWatcher(threadName, sleepTime):
     global kill_flag
     # Needs to be BCM. GPIO.BOARD lets you address GPIO ports by periperal
@@ -40,9 +45,6 @@ def runWatcher(threadName, sleepTime):
     GPIO.setup(16, GPIO.OUT)
 
     while 1 < 2:
-        #time.sleep(sleepTime)
-        # Wait a bit
-        sleep(1)
         # On
         GPIO.output(16, GPIO.LOW)
         # Wait a bit
@@ -51,10 +53,13 @@ def runWatcher(threadName, sleepTime):
         GPIO.output(16, GPIO.HIGH)
         
         if(kill_flag > 0) :
-            print threadName, " exiting."
-            os.system('shutdown -h now')
+            exitnow(threadName)
             return
-            
+        else :
+            #time.sleep(sleepTime)
+            # Wait a bit
+            sleep(1)
+        
 
 def runSerial():
     global kill_flag
@@ -80,7 +85,14 @@ def runSerial():
 kill_flag = 0
 threads=[]
 if(sys.platform.startswith('win')==False): # Linux
-    if(os.path.exists('/dev/ttyUSB0')==False) :
+    count = 0
+    while(os.path.exists('/dev/ttyUSB0')==False) :
+        if(count>10):
+            exitnow('main')
+        else :
+            print 'waiting for USB serial ...'
+            count += 1
+            sleep(1)
         exit
         
 print 'starting serial ...'
