@@ -138,7 +138,7 @@ def getMetrics(data):
         metrics = [0]*len(b)
     return metrics
 
-path = './drivers/'
+path = 'C:/Users/3820104/Documents/_python_data/Driver Telematics Analysis/drivers/'
 dirs = [d for d in os.listdir(path) if os.path.isdir(os.path.join(path, d))]
 for i in range(len(dirs)):
     dirpath = path+dirs[i]+'/' 

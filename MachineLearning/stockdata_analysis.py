@@ -18,7 +18,7 @@ style.use("dark_background")
 
 import re
 
-path = "C:/Users/3820104/Downloads/intraQuarter"
+path = "C:/Users/3820104/Documents/_python_data/intraQuarter"
 
 def Key_Stats(gather="Total Debt/Equity (mrq)"):
     statspath = path+"/_KeyStats"
@@ -32,7 +32,8 @@ def Key_Stats(gather="Total Debt/Equity (mrq)"):
                                'stock_p_change',
                                'SP500',
                                'sp500_p_change',
-                               'Difference'])
+                               'Difference',
+                               'Status'])
     
     sp500_df = pd.DataFrame.from_csv("YAHOO-INDEX_GSPC.csv")
     
@@ -63,7 +64,8 @@ def Key_Stats(gather="Total Debt/Equity (mrq)"):
                         try:
                             value = float(source.split(gather+':</td>/n<td class="yfnc_tabledata1">')[1].split('</td>')[0]) # 0.407
                         except Exception as e:
-                            print('value_2 failed',str(e),ticker,file)
+                            #print('value_2 failed',str(e),ticker,file)
+                            pass
                         
                     try:
                         sp500_date = datetime.fromtimestamp(unix_time).strftime('%Y-%m-%d')
@@ -76,7 +78,8 @@ def Key_Stats(gather="Total Debt/Equity (mrq)"):
                             row = sp500_df[(sp500_df.index == sp500_date)]
                             sp500_value = float(row["Adjusted Close"])
                         except Exception as e:
-                            print('sp500_2 failed',str(e))
+                            #print('sp500_2 failed',str(e))
+                            pass
                     
                     try:
                         stock_price = float(source.split('</small><big><b>')[1].split('</b></big>')[0])
@@ -94,7 +97,8 @@ def Key_Stats(gather="Total Debt/Equity (mrq)"):
                                 stock_price = re.search(r'(\d{1,8}\.\d{1,8})',stock_price)
                                 stock_price = float(stock_price.group(1))
                             except Exception as e:
-                                print('stock_price_2 failed',str(e))
+                                #print('stock_price_2 failed',str(e))
+                                pass
                             
                             #print('stock_price:',str(e), ticker, file)
                             #time.sleep(15)
@@ -110,6 +114,11 @@ def Key_Stats(gather="Total Debt/Equity (mrq)"):
                     stock_p_change = ((stock_price - starting_stock_value)/starting_stock_value)*100
                     sp500_p_change = ((sp500_value - starting_sp500_value)/starting_sp500_value)*100
                     
+                    difference = stock_p_change-sp500_p_change
+                    if difference > 0:
+                        status = "outperform"
+                    else:
+                        status = "underperform"
                     
                     
                     #print(ticker+":",value)
@@ -121,7 +130,8 @@ def Key_Stats(gather="Total Debt/Equity (mrq)"):
                                     'stock_p_change':stock_p_change,
                                     'SP500':sp500_value,
                                     'sp500_p_change':sp500_p_change,
-                                    'Difference':stock_p_change-sp500_p_change}, ignore_index = True)
+                                    'Difference':difference,
+                                    'Status':status}, ignore_index = True)
                 except Exception as e:
                     print('unknown',str(e),file,ticker)
                     #time.sleep(1)
@@ -131,8 +141,12 @@ def Key_Stats(gather="Total Debt/Equity (mrq)"):
         try:
             plot_df = df[(df['Ticker'] == each_ticker)]
             plot_df = plot_df.set_index(['Date'])
-            plot_df['Difference'].plot(label=each_ticker)
-            plt.legend()
+            if plot_df['Status'][-1] == "underperform":
+                color = 'r'
+            else:
+                color = 'g'
+            plot_df['Difference'].plot(label=each_ticker, color=color)
+            #plt.legend()
         except:
             pass
             
