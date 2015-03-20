@@ -5,7 +5,7 @@ Created on Tue Mar 17 12:28:05 2015
 @author: 3820104
 """
 #http://pythonprogramming.net/preprocessing-machine-learning/?completed=/linear-svc-machine-learning-testing-data/
-
+#Quandl: un:jy, pw:jy1.Quandl$, api_key:Kf2AEgCbui4Q6ryHnAYT
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn import svm, preprocessing
@@ -50,9 +50,10 @@ FEATURES =  ['DE Ratio',
              'Shares Short (prior ']
 
 def Build_Data_Set():
-    data_df = pd.DataFrame.from_csv("key_stats.csv")
+    data_df = pd.DataFrame.from_csv("key_stats_acc_perf_NO_NA.csv")
     #data_df = data_df[:100]
     data_df = data_df.reindex(np.random.permutation(data_df.index))
+    #data_df = data_df.replace()
     X = np.array(data_df[FEATURES].values)#.tolist())
     y = (data_df["Status"]
         .replace("underperform",0)
@@ -76,11 +77,4 @@ def Analysis():
             correct_count += 1
     print("Accuracy:", (float(correct_count)/test_size) * 100.00)
  
-def Randomizing():
-    df = pd.DataFrame({"D1":range(5), "D2": range(5)})
-    print (df)
-    df2 = df.reindex(np.random.permutation(df.index))
-    print(df2)
-   
-#Randomizing()
 Analysis()
