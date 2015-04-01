@@ -12,10 +12,12 @@ import re
 #import scipy as sp
 import numpy as np
 import logloss
+import sys
+sys.path.append('../../jly')
+import stringman
 
-
-path = r'C:\Users\3820104\Documents\_python_data\Biological Response'
-path = re.sub(r"\\","/",path)
+path = r'../../../_python_data\Biological Response'
+path = stringman.fix_path(path)
 
 
 def rfc():
