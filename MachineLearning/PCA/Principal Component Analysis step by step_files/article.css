@@ -1,0 +1,108 @@
+/***************************
+Article Headline
+***************************/
+
+
+h1.title {
+    padding-top: 60px;
+    padding-bottom: 20px;
+}
+
+h1.with_subtitle {
+    padding-top: 60px;
+    padding-bottom: 0px;
+}
+
+h2.with_subtitle {
+    padding-top: 5px;
+    padding-bottom: 20px;
+}
+
+h3.with_subtitle {
+    padding-top: 5px;
+    padding-bottom: 20px;
+}
+
+
+.author_date {
+    color:#646060;
+    font-size: 90%; 
+    font-family: 'Roboto', sans-serif;
+    font-size: 12px;
+    padding-bottom: 5px;
+}
+
+
+
+
+
+.article {
+    float:left;
+    text-align:left;
+    width: 700px;
+    font: 14px/21px 'Roboto', sans-serif;
+    line-height: 26px;
+}
+
+.article p {
+    padding-top:20px;
+}
+
+.article #abstract {
+    font-weight:bold;
+    font-size:1.05em;
+    line-height: 1.6em;
+}
+
+
+
+.article .back_to_top {
+    font-size: 70%;
+}
+
+.back_to_top:hover {
+        color: #6495ED;    
+}
+
+.article .citation {
+    padding-top:20px;
+    padding-bottom:40px;
+    margin: 0px auto;
+    font-size: 10px;
+    line-height: 12px;
+}
+
+/* unvisited link */
+.article a:link {
+    color: #1919FF;
+}
+
+/* visited link */
+.article a:visited {
+    color: #6495ED;
+}
+
+/* mouse over link */
+.article a:hover {
+    color: #CCCCCC;
+}
+
+/* selected link */
+.article a:active {
+    color: #CCCCCC;
+}
+
+.textbox {
+	border:1px solid black; 
+	padding:20px; 
+	width:100%;
+}
+
+
+/***************************
+htlatex 
+***************************/
+
+
+.eq-no{ width:1%;}
+.cmti-10{font-style: italic;}

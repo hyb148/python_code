@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 import math as math
 import os
 import sys
-sys.path.append('../jly')
+sys.path.append('../../utils')
 import stringman
 
 """
@@ -148,7 +148,7 @@ path = stringman.fix_path(path)
 dirs = [d for d in os.listdir(path) if os.path.isdir(os.path.join(path, d))]
 for i in range(len(dirs)):
     dirpath = path+dirs[i]+'/' 
-    outfile = dirpath +'_fulldata' .txt'
+    outfile = dirpath +'_fulldata' + '.txt'
     if(os.path.exists(outfile)==False):
         if(os.path.exists(dirpath) and os.path.isdir(dirpath)):
             onlyfiles = [os.path.join(dirpath,fn) for fn in next(os.walk(dirpath))[2]] #[ f for f in listdir(mypath) if isfile(join(mypath,f)) ]
